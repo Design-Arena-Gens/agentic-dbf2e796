@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Climate Change: Causes, Consequences, and Action</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-dark: #0b1d26;
+        --bg-section: #11293a;
+        --accent-warm: #ff6b35;
+        --accent-cool: #1ec3ff;
+        --text-main: #f5f5f5;
+        --text-muted: #c8d0d8;
+        --card-bg: rgba(255, 255, 255, 0.08);
+        --border-color: rgba(255, 255, 255, 0.08);
+        --high-contrast: #ffffff;
+        --chart-bar: #ff914d;
+        --chart-line: #ffc857;
+        --chart-area: rgba(255, 200, 87, 0.18);
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: radial-gradient(circle at top left, #10354a, #08141b 60%);
+        color: var(--text-main);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      header {
+        padding: 3.5rem 1.5rem 2rem;
+        text-align: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      header h1 {
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
+        margin-bottom: 1rem;
+        color: var(--high-contrast);
+        letter-spacing: 0.02em;
+      }
+
+      header p {
+        font-size: clamp(1.05rem, 2vw, 1.25rem);
+        max-width: 720px;
+        margin: 0 auto;
+        color: var(--text-muted);
+      }
+
+      .infographic {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem 4rem;
+        display: grid;
+        gap: 3rem;
+      }
+
+      section {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 24px;
+        padding: 2.5rem;
+        backdrop-filter: blur(12px);
+        position: relative;
+        overflow: hidden;
+      }
+
+      section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255, 107, 53, 0.06), transparent);
+        pointer-events: none;
+      }
+
+      section h2 {
+        margin-top: 0;
+        font-size: clamp(1.75rem, 3vw, 2.25rem);
+        color: var(--high-contrast);
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.45rem 1rem;
+        background: rgba(255, 107, 53, 0.12);
+        color: var(--accent-warm);
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .grid {
+        display: grid;
+        gap: 1.75rem;
+      }
+
+      .grid.two {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+
+      .fact-card {
+        background: rgba(17, 41, 58, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 20px;
+        padding: 1.75rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .fact-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.18));
+        pointer-events: none;
+      }
+
+      .fact-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: rgba(255, 145, 77, 0.16);
+        display: grid;
+        place-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .fact-card h3 {
+        margin: 0 0 0.75rem;
+        font-size: 1.2rem;
+      }
+
+      .highlight {
+        color: var(--accent-cool);
+        font-weight: 600;
+      }
+
+      .chart {
+        margin-top: 1.5rem;
+        background: rgba(6, 18, 25, 0.55);
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 1.5rem;
+      }
+
+      .chart h3 {
+        margin-top: 0;
+        font-size: 1.1rem;
+      }
+
+      .chart-description {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+      }
+
+      .bar-chart {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .bar-item {
+        display: grid;
+        gap: 0.35rem;
+      }
+
+      .bar-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.95rem;
+      }
+
+      .bar {
+        height: 12px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, rgba(255, 145, 77, 0.15), rgba(255, 145, 77, 0.55));
+        position: relative;
+      }
+
+      .bar-fill {
+        position: absolute;
+        inset: 0;
+        width: 0;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--chart-bar), rgba(255, 107, 53, 0.65));
+        --percent: 50%;
+        transform-origin: left;
+        transition: width 1.2s ease-in-out;
+      }
+
+      .bar[aria-valuenow] .bar-fill {
+        width: calc(var(--percent) * 1%);
+      }
+
+      .line-chart {
+        position: relative;
+      }
+
+      .line-chart svg {
+        width: 100%;
+        height: auto;
+      }
+
+      .line-chart .axis-label {
+        font-size: 0.75rem;
+        fill: var(--text-muted);
+      }
+
+      .line-chart .caption {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-top: 0.75rem;
+      }
+
+      .flow {
+        display: grid;
+        gap: 1.1rem;
+        margin-top: 1.5rem;
+        font-size: 0.98rem;
+        color: var(--text-muted);
+      }
+
+      .action-grid {
+        display: grid;
+        gap: 1.35rem;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        margin-top: 1.75rem;
+      }
+
+      .action-card {
+        background: rgba(8, 28, 38, 0.9);
+        border-radius: 18px;
+        border: 1px solid rgba(30, 195, 255, 0.2);
+        padding: 1.5rem;
+      }
+
+      .action-card h3 {
+        margin-top: 0;
+        color: var(--accent-cool);
+      }
+
+      ul {
+        padding-left: 1.2rem;
+      }
+
+      li {
+        margin-bottom: 0.5rem;
+      }
+
+      footer {
+        max-width: 1200px;
+        margin: 0 auto 3rem;
+        padding: 0 1.5rem;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+      }
+
+      footer h3 {
+        color: var(--high-contrast);
+        font-size: 1rem;
+      }
+
+      footer ul {
+        padding-left: 1.2rem;
+        margin: 0.75rem 0 0;
+        display: grid;
+        gap: 0.6rem;
+      }
+
+      a {
+        color: var(--accent-cool);
+      }
+
+      @media (max-width: 780px) {
+        section {
+          padding: 2rem;
+        }
+
+        .fact-card {
+          padding: 1.5rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="pill">
+        <span aria-hidden="true">🌍</span>
+        Climate Reality Brief
+      </div>
+      <h1>Climate Change: From Root Causes to Far-Reaching Consequences</h1>
+      <p>
+        Synthesized insights from IPCC AR6 reports and recent peer-reviewed studies reveal how human activities drive greenhouse gas emissions and the cascading impacts now unfolding worldwide. Explore the biggest emitters, the accelerating consequences, and actions that can keep global warming within safer limits.
+      </p>
+    </header>
+
+    <main class="infographic">
+      <section>
+        <h2>Primary Drivers of Climate Change</h2>
+        <p class="flow">
+          Human-caused greenhouse gas emissions remain the dominant force behind rapid warming. Fossil fuel combustion, industrial processes, and land-use change together account for more than 90% of the rise in carbon dioxide equivalents since 1850.
+        </p>
+        <div class="grid two">
+          <article class="fact-card">
+            <div class="fact-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path d="M4 20h20L14 8 4 20Z" stroke="#FF914D" stroke-width="2" />
+                <path d="M14 3v5" stroke="#FF914D" stroke-width="2" stroke-linecap="round" />
+                <path d="M9 23h10" stroke="#FF914D" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </div>
+            <h3>Fossil Fuel Energy</h3>
+            <p>
+              Electricity and heat production emit <span class="highlight">34% of global GHGs</span> (IPCC AR6 WGIII, 2019 data), driven by coal- and gas-fired power based on outdated infrastructure.
+            </p>
+          </article>
+          <article class="fact-card">
+            <div class="fact-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path d="M7 21h14" stroke="#FF914D" stroke-width="2" stroke-linecap="round" />
+                <path
+                  d="M7 21v-8a7 7 0 0 1 14 0v8"
+                  stroke="#FF914D"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+                <path d="M10 13h8" stroke="#FF914D" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </div>
+            <h3>Industry & Manufacturing</h3>
+            <p>
+              Cement, steel, and chemical production contribute <span class="highlight">24% of emissions</span>, with process heat and inherent chemical reactions relying on fossil fuels (IPCC AR6 WGIII).
+            </p>
+          </article>
+          <article class="fact-card">
+            <div class="fact-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path
+                  d="M4 16c6.5 2 4.5-7 12-5"
+                  stroke="#FF914D"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path d="M9 22c8-4 7-16 15-12" stroke="#FF914D" stroke-width="2" />
+              </svg>
+            </div>
+            <h3>Land-Use Change</h3>
+            <p>
+              Deforestation and agricultural expansion reduce carbon sinks and emit methane and nitrous oxide, accounting for <span class="highlight">22% of emissions</span> (IPCC AR6 WGIII).
+            </p>
+          </article>
+          <article class="fact-card">
+            <div class="fact-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path
+                  d="M5 20h18l-2-8h-5l-2-6-2 6H7l-2 8Z"
+                  stroke="#FF914D"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+                <path d="M9 24h10" stroke="#FF914D" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </div>
+            <h3>Transport</h3>
+            <p>
+              Road, aviation, and shipping demand has surged, responsible for <span class="highlight">15% of emissions</span>. Electrification with clean grids could cut this dramatically (IPCC AR6 WGIII).
+            </p>
+          </article>
+        </div>
+
+        <div class="chart" aria-labelledby="emissions-chart">
+          <h3 id="emissions-chart">Global Greenhouse Gas Emissions by Sector (2019)</h3>
+          <p class="chart-description">
+            Fossil fuel-dependent sectors dominate emissions, underscoring the urgency of energy system transformations. Data: IPCC AR6 Working Group III (2022).
+          </p>
+          <div class="bar-chart" role="list"></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Cascading Consequences Already Unfolding</h2>
+        <div class="grid two">
+          <article class="fact-card">
+            <div class="fact-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path
+                  d="M6 10c3-5 13-5 16 0"
+                  stroke="#FF914D"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path d="M6 18c5 5 11 5 16 0" stroke="#FF914D" stroke-width="2" />
+                <path d="M4 14h20" stroke="#FF914D" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </div>
+            <h3>Rising Seas</h3>
+            <p>
+              Global mean sea level has risen <span class="highlight">~0.20 m since 1901</span> and is accelerating, threatening coastal cities and small island states (IPCC AR6 WGI).
+            </p>
+          </article>
+          <article class="fact-card">
+            <div class="fact-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path
+                  d="M9 9a5 5 0 0 1 10 0v2H9V9Z"
+                  stroke="#FF914D"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M7 21h14l-1.5-6h-11L7 21Z"
+                  stroke="#FF914D"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+                <path d="M5 24h18" stroke="#FF914D" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </div>
+            <h3>Extreme Heat & Weather</h3>
+            <p>
+              The frequency of extreme heat events has <span class="highlight">tripled compared with 1950</span>, amplifying droughts, wildfires, and intense precipitation (IPCC AR6 WGI & Nature Climate Change 2023).
+            </p>
+          </article>
+          <article class="fact-card">
+            <div class="fact-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path
+                  d="M5 21c8-1 5-9 13-10"
+                  stroke="#FF914D"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M10 15c4-4 7-4 11 0"
+                  stroke="#FF914D"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path d="M17 11c2-2 3-2 5 0" stroke="#FF914D" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </div>
+            <h3>Biodiversity Loss</h3>
+            <p>
+              1 million species face extinction risk from climate and land-use pressures (IPBES 2019). Marine heatwaves have <span class="highlight">doubled since the 1980s</span>, bleaching coral reefs (Science 2020).
+            </p>
+          </article>
+          <article class="fact-card">
+            <div class="fact-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path
+                  d="M6 12c0-4 3-7 8-7s8 3 8 7"
+                  stroke="#FF914D"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path d="M5 17c1 5 7 8 9 8s8-3 9-8" stroke="#FF914D" stroke-width="2" />
+                <path d="M9 14h10" stroke="#FF914D" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </div>
+            <h3>Human Health</h3>
+            <p>
+              Heat-related mortality is rising, with <span class="highlight">37% of heat deaths</span> already attributable to anthropogenic climate change (Lancet Planetary Health 2021).
+            </p>
+          </article>
+        </div>
+        <div class="chart line-chart" aria-labelledby="temp-chart">
+          <h3 id="temp-chart">Global Mean Surface Temperature Change (1850–2022)</h3>
+          <p class="chart-description">
+            Global warming has reached <span class="highlight">~1.1°C above 1850-1900</span> baselines, with the steepest rise since 1980. Data: IPCC AR6 WGI (2021); NASA GISTEMP (2023 update).
+          </p>
+          <svg viewBox="0 0 600 260" role="img" aria-label="Line chart showing rising global temperature anomalies">
+            <defs>
+              <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="var(--chart-area)" />
+                <stop offset="100%" stop-color="rgba(255,200,87,0)" />
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="600" height="260" fill="rgba(17,41,58,0.65)" rx="16" />
+            <g transform="translate(50,30)">
+              <polyline
+                fill="url(#areaGradient)"
+                stroke="none"
+                points="0,180 0,170 60,168 120,164 180,150 240,132 300,108 360,88 420,70 480,54 540,42 540,180"
+              ></polyline>
+              <polyline
+                fill="none"
+                stroke="var(--chart-line)"
+                stroke-width="3"
+                stroke-linecap="round"
+                points="0,170 60,168 120,164 180,150 240,132 300,108 360,88 420,70 480,54 540,42"
+              ></polyline>
+              <g fill="var(--text-muted)" font-size="12">
+                <text x="-20" y="175" class="axis-label">-0.3°C</text>
+                <text x="-20" y="135" class="axis-label">0°C</text>
+                <text x="-20" y="95" class="axis-label">0.5°C</text>
+                <text x="-20" y="55" class="axis-label">1.0°C</text>
+                <text x="-20" y="15" class="axis-label">1.4°C</text>
+              </g>
+              <g fill="var(--text-muted)" font-size="12">
+                <text x="-10" y="205" class="axis-label">1850</text>
+                <text x="160" y="205" class="axis-label">1900</text>
+                <text x="320" y="205" class="axis-label">1950</text>
+                <text x="480" y="205" class="axis-label">2000</text>
+                <text x="520" y="205" class="axis-label">2022</text>
+              </g>
+            </g>
+          </svg>
+          <p class="caption">
+            The fastest warming has occurred in the last four decades due to continued emissions. Staying under 1.5°C requires global emissions to decline by <span class="highlight">43% by 2030</span> (IPCC AR6 Synthesis Report 2023).
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Action Pathways to Limit Warming</h2>
+        <p class="flow">
+          Immediate systemic and individual actions can halve emissions this decade and avoid locking in high-emission infrastructure. Strategic transitions create co-benefits including cleaner air, resilient communities, and biodiversity protection.
+        </p>
+        <div class="action-grid">
+      <article class="action-card">
+        <h3>Energy Systems</h3>
+        <ul>
+          <li>Accelerate renewable deployment (solar, wind, storage) to replace coal and gas generation.</li>
+          <li>Modernize grids with demand response and efficiency upgrades to reduce losses.</li>
+          <li>Retire unabated coal plants early; invest in just transitions for fossil-fuel workers.</li>
+        </ul>
+      </article>
+          <article class="action-card">
+            <h3>Land & Food</h3>
+            <ul>
+              <li>Protect and restore forests, peatlands, and mangroves to expand carbon sinks.</li>
+              <li>Adopt regenerative agriculture and methane-reducing livestock practices.</li>
+              <li>Shift diets toward plant-rich options to lower lifecycle emissions.</li>
+            </ul>
+          </article>
+          <article class="action-card">
+            <h3>Cities & Transport</h3>
+            <ul>
+              <li>Electrify public transit and scale EV adoption with clean-powered charging networks.</li>
+              <li>Design compact, walkable neighborhoods with resilient cooling strategies.</li>
+              <li>Upgrade building efficiency through retrofits, heat pumps, and low-carbon materials.</li>
+            </ul>
+          </article>
+          <article class="action-card">
+            <h3>Policy & Finance</h3>
+            <ul>
+              <li>Implement carbon pricing and remove fossil subsidies to align capital flows.</li>
+              <li>Invest in adaptation measures for vulnerable communities and infrastructure.</li>
+              <li>Scale climate finance to the Global South to accelerate equitable transitions.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <h3>Sources</h3>
+      <ul>
+        <li>IPCC, 2022: AR6 Working Group III Report – Mitigation of Climate Change. <em>Summary for Policymakers</em>.</li>
+        <li>IPCC, 2021: AR6 Working Group I Report – The Physical Science Basis. <em>Summary for Policymakers</em>.</li>
+        <li>IPBES, 2019: Global Assessment Report on Biodiversity and Ecosystem Services.</li>
+        <li>Harrington et al., 2023: <em>Nature Climate Change</em> – Rapid intensification of extreme heat events under global warming.</li>
+        <li>Vicedo-Cabrera et al., 2021: <em>Lancet Planetary Health</em> – Contribution of extreme heat to mortality.</li>
+        <li>Oliver et al., 2020: <em>Science</em> – Escalating marine heatwaves and climate impacts.</li>
+        <li>NASA GISTEMP v4 (2023 update) – Global mean surface temperature anomalies.</li>
+      </ul>
+    </footer>
+
+    <script>
+      const barData = [
+        { label: "Electricity & Heat", value: 34 },
+        { label: "Industry", value: 24 },
+        { label: "Agriculture, Forestry & Land Use", value: 22 },
+        { label: "Transport", value: 15 },
+        { label: "Buildings", value: 6 }
+      ];
+
+      const chartContainer = document.querySelector(".bar-chart");
+
+      barData.forEach((item) => {
+        const barItem = document.createElement("div");
+        barItem.className = "bar-item";
+        barItem.setAttribute("role", "listitem");
+
+        const label = document.createElement("div");
+        label.className = "bar-label";
+
+        const spanLabel = document.createElement("span");
+        spanLabel.textContent = item.label;
+
+        const spanValue = document.createElement("span");
+        spanValue.textContent = `${item.value}%`;
+
+        label.append(spanLabel, spanValue);
+
+        const bar = document.createElement("div");
+        bar.className = "bar";
+        bar.setAttribute("aria-valuemin", "0");
+        bar.setAttribute("aria-valuemax", "100");
+        bar.setAttribute("aria-valuenow", item.value.toString());
+        bar.setAttribute("role", "progressbar");
+        bar.setAttribute("aria-label", `${item.label} contribute ${item.value}% of emissions`);
+
+        const fill = document.createElement("div");
+        fill.className = "bar-fill";
+        fill.style.setProperty("--percent", item.value);
+
+        bar.appendChild(fill);
+        barItem.append(label, bar);
+        chartContainer.appendChild(barItem);
+      });
+    </script>
+  </body>
+</html>
